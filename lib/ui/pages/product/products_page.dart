@@ -1,3 +1,4 @@
+import 'package:amoris_new/ui/pages/product/semi_products_page.dart';
 import 'package:amoris_new/ui/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class ProductsPage extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            Center(child: Text("Yarım fabrikat")),
+            SemiProductsPage(),
             Center(child: Text("Hazır məhsul")),
           ],
         ),
