@@ -1,10 +1,11 @@
-import 'package:amoris_new/utils/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../cubits/productDetail/product_detail_cubit.dart';
+import '../../../../data/model/remote/product_response.dart';
+import '../../../../utils/constants/app_colors.dart';
 
-Future<void> showConfirmationDialog(BuildContext context) {
+Future<void> showConfirmationDialog(BuildContext context,ProductResponse product) {
   final productCubit = context.read<ProductDetailCubit>();
 
   productCubit.clearControllers();
@@ -13,7 +14,7 @@ Future<void> showConfirmationDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text("Məhsul məlumatları"),
+         title: Text("${product.adi} - ${product.kod}"), 
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

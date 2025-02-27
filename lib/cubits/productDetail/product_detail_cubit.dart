@@ -82,7 +82,7 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
     }
   }
 
-  void clearControllers() {
+    void clearControllers() {
     sayController.clear();
     cekiController.clear();
   }
