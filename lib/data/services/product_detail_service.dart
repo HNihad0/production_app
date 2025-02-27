@@ -2,21 +2,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../endpoints.dart';
-import '../model/remote/product_response.dart';
+import '../model/remote/product_detail_response.dart';
 
-class ProductService {
-  Future<List<ProductResponse>> fetchProducts() async {
+class ProductDetailService {
+  Future<List<ProductDetailResponse>> fetchProductsDetail() async {
     try {
-      Uri url = Uri.parse(Endpoints.products);
+      Uri url = Uri.parse(Endpoints.productDetail);
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
         return data
-            .map((productJson) => ProductResponse.fromJson(productJson))
+            .map((productJson) => ProductDetailResponse.fromJson(productJson))
             .toList();
       } else {
-        throw Exception('Məhsullar yüklənmədi: ${response.statusCode}');
+        throw Exception('Məhsul inqrediyenti yüklənmədi: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Xəta yarandı: $e');
