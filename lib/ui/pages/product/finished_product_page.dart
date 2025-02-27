@@ -1,9 +1,9 @@
-import 'package:amoris_new/ui/widgets/custom_circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/product/product_cubit.dart';
-import 'widgets/semi_product_grid.dart';
+import '../../widgets/custom_circular_progress.dart';
+import 'widgets/product_grid.dart';
 
 class FinishedProductsPage extends StatelessWidget {
   const FinishedProductsPage({super.key});

@@ -31,8 +31,8 @@ class ProductCard extends StatelessWidget {
             builder: (context) => BlocProvider(
               create: (context) => ProductDetailCubit(
                 productDetailService: ProductDetailService(),
-              )..fetchProductDetailsById(product.idn), 
-              child: ProductDetailPage(productId: product.idn),
+              )..fetchProductDetailsById(product), 
+              child: ProductDetailPage(product: product),
             ),
           ),
         );

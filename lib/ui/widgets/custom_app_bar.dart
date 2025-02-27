@@ -16,29 +16,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            AppAssets.logo,
-            width: 50,
-            height: 50,
-          ),
-          8.w,
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              letterSpacing: -0.5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              AppAssets.logo,
+              width: 50,
+              height: 50,
             ),
-          ),
-        ],
+            8.w,
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+        actions: actions,
+        bottom: bottom, 
       ),
-      centerTitle: true,
-      actions: actions,
-      bottom: bottom, 
     );
   }
 

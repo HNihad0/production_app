@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubits/product/product_cubit.dart';
-import 'widgets/semi_product_grid.dart';
+import 'widgets/product_grid.dart';
 
 class SemiProductsPage extends StatelessWidget {
   const SemiProductsPage({super.key});

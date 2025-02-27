@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../data/model/remote/product_response.dart';
 import '../../../utils/constants/app_paddings.dart';
 import '../../widgets/custom_app_bar.dart';
 import 'widgets/product_grid.dart';
 import 'widgets/select_products_list.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  final int productId;
-  const ProductDetailPage({super.key, required this.productId});
+  final ProductResponse product;
+  const ProductDetailPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,9 @@ class ProductDetailPage extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: Container(
-              padding: AppPaddings.a16,
-              child: const SelectedProductsListView(), 
+            child: Padding(
+              padding: AppPaddings.a12,
+              child: SelectedProductsListView(product: product),
             ),
           ),
            Expanded(
