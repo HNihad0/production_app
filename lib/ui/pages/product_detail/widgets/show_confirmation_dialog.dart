@@ -48,17 +48,7 @@ Future<void> showConfirmationDialog(BuildContext context,ProductResponse product
               backgroundColor: AppColors.green,
             ),
             onPressed: () {
-              final say = productCubit.sayController.text.trim();
-              final ceki = productCubit.cekiController.text.trim();
-              if (say.isNotEmpty && ceki.isNotEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content:
-                        Text("Məhsul təsdiqləndi: Say = $say, Çəki = $ceki"),
-                  ),
-                );
-                Navigator.pop(context);
-              }
+              context.read<ProductDetailCubit>().postSelectedProducts();
             },
             child: const Text(
               "Təsdiqlə",

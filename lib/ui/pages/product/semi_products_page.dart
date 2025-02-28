@@ -1,3 +1,4 @@
+import 'package:amoris_new/ui/widgets/custom_circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,7 @@ class SemiProductsPage extends StatelessWidget {
     return BlocBuilder<ProductCubit, ProductState>(
       builder: (_, state) {
         if (state is ProductLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CustomProgressLoading.medium());
         }
         if (state is ProductError) {
           return Center(child: Text('Xəta: ${state.message}'));

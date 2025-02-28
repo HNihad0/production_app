@@ -1,6 +1,7 @@
 import 'package:amoris_new/ui/widgets/custom_app_bar.dart';
 import 'package:amoris_new/utils/constants/app_colors.dart';
 import 'package:amoris_new/utils/constants/app_radiuses.dart';
+import 'package:amoris_new/utils/constants/app_texts.dart';
 import 'package:amoris_new/utils/extensions/num_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                     color: AppColors.bisque,
                   ),
                   8.w,
-                  Text("Yeni sifariş"),
+                  Text(AppTexts.newOrder),
                 ],
               ),
             ),

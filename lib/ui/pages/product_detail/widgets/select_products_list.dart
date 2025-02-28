@@ -53,17 +53,7 @@ class SelectedProductsListView extends StatelessWidget {
               backgroundColor: AppColors.green,
             ),
             onPressed: () {
-              final say = productCubit.sayController.text.trim();
-              final ceki = productCubit.cekiController.text.trim();
-              if (say.isNotEmpty && ceki.isNotEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content:
-                        Text("Məhsul təsdiqləndi: Say = $say, Çəki = $ceki"),
-                  ),
-                );
-                Navigator.pop(context);
-              }
+              productCubit.postSelectedProducts();
             },
             child: const Text(
               "Təsdiqlə",
