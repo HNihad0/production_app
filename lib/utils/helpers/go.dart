@@ -9,10 +9,11 @@ class Go {
       );
 
   static void replace(BuildContext context, Widget page) =>
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => page),
+        (route) => false, 
       );
 
-      static void pop(BuildContext context) => Navigator.pop(context);
+  static void pop(BuildContext context) => Navigator.pop(context);
 }

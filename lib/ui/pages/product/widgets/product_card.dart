@@ -16,22 +16,19 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cardColor = product.category == "Hazır fabrikat"
-        ? AppColors.tileColor
-        : AppColors.aquamarine;
-    final textColor = product.category == "Hazır fabrikat"
-        ? AppColors.blue
-        : AppColors.bisque;
+    final cardColor =
+        product.nov == 1 ? AppColors.tileColor : AppColors.aquamarine;
+    final textColor = product.nov == 1 ? AppColors.blue : AppColors.bisque;
 
     return GestureDetector(
       onTap: () {
-         Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider(
               create: (context) => ProductDetailCubit(
                 productDetailService: ProductDetailService(),
-              )..fetchProductDetailsById(product), 
+              )..fetchProductDetailsById(product),
               child: ProductDetailPage(product: product),
             ),
           ),

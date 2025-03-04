@@ -15,6 +15,8 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
 
   final TextEditingController sayController = TextEditingController();
   final TextEditingController cekiController = TextEditingController();
+  final TextEditingController neferController = TextEditingController();
+
   ProductResponse? selectedProduct;
 
   ProductDetailCubit({required this.productDetailService})
@@ -23,18 +25,19 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   Future<void> fetchProductDetailsById(ProductResponse product) async {
     try {
       log("Fetching product details for: ${product.adi}");
+
       emit(ProductDetailLoading());
 
       final List<ProductDetailResponse> productDetails =
           await productDetailService.fetchProductsDetail();
 
       final filteredProducts =
-          productDetails.where((detail) => detail.mal == product.idn).toList();
+          productDetails.where((detail) => detail.idn == product.idn).toList();
 
       selectedProduct = product;
-      log("Selected Product: ${selectedProduct?.adi}");
-      log("Selected Product Code: ${selectedProduct?.kod}");
-      log("Selected Product ID: ${selectedProduct?.idn}");
+      log("Selected Product: ${product.adi}");
+      log("Selected Product Code: ${product.kod}");
+      log("Selected Product ID: ${product.idn}");
 
       if (filteredProducts.isEmpty) {
         log("No ingredients found for: ${product.adi}");
@@ -54,14 +57,15 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   }
 
   void selectProduct(ProductDetailResponse product) {
-    log("Selecting product: ${product.malAdi}");
+    log("Selecting product: ${product.name}");
+    log("Selecting product ID: ${product.mal}");
     selectedProducts.update(product, (count) => count + 1.0,
         ifAbsent: () => 1.0);
     _emitUpdatedState();
   }
 
   void incrementProduct(ProductDetailResponse product) {
-    log("Incrementing quantity for: ${product.malAdi}");
+    log("Incrementing quantity for: ${product.name}");
     selectedProducts.update(product, (count) => count + 1.0,
         ifAbsent: () => 1.0);
     _emitUpdatedState();
@@ -70,17 +74,17 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   void decrementProduct(ProductDetailResponse product) {
     if (selectedProducts.containsKey(product) &&
         selectedProducts[product]! > 1) {
-      log("Decrementing quantity for: ${product.malAdi}");
+      log("Decrementing quantity for: ${product.name}");
       selectedProducts.update(
           product, (count) => (count - 1.0).clamp(0.0, double.infinity));
       _emitUpdatedState();
     } else {
-      log("Cannot decrement: ${product.malAdi} - Minimum quantity reached");
+      log("Cannot decrement: ${product.name} - Minimum quantity reached");
     }
   }
 
   void removeProduct(ProductDetailResponse product) {
-    log("Removing product: ${product.malAdi}");
+    log("Removing product: ${product.name}");
     selectedProducts.remove(product);
     _emitUpdatedState();
   }
@@ -88,11 +92,11 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
   void updateProductQuantity(
       ProductDetailResponse product, double newQuantity) {
     if (newQuantity > 0) {
-      log("Updating quantity for: ${product.malAdi} to $newQuantity");
+      log("Updating quantity for: ${product.name} to $newQuantity");
       selectedProducts[product] = newQuantity;
       _emitUpdatedState();
     } else {
-      log("Invalid quantity: $newQuantity for ${product.malAdi}");
+      log("Invalid quantity: $newQuantity for ${product.name}");
     }
   }
 
@@ -102,47 +106,53 @@ class ProductDetailCubit extends Cubit<ProductDetailState> {
     cekiController.clear();
   }
 
-   Future<void> postSelectedProducts() async {
-  if (selectedProduct == null) {
-    log("Error: No product selected for posting.");
-    return;
-  }
+  Future<void> postSelectedProducts() async {
+    if (selectedProduct == null) {
+      log("Error: No product selected for posting.");
+      return;
+    }
 
-  try {
-    log("Posting selected product...");
+    try {
+      log("Posting selected product...");
 
-    for (var entry in selectedProducts.entries) {
-      final product = entry.key;
+      List<Map<String, dynamic>> productList =
+          selectedProducts.entries.map((entry) {
+        final product = entry.key;
+        final productCount = entry.value;
+
+        return {
+          "productCode": product.mal.toString(),
+          "productWare": product.mal,
+          "productCount": productCount,
+        };
+      }).toList();
 
       bool success = await productDetailService.postProductDetail(
         code: selectedProduct!.kod,
-        ware: product.mal,
+        ware: selectedProduct!.idn,
         count: sayController.text.isEmpty
             ? 0.0
             : double.tryParse(sayController.text) ?? 0.0,
         weight: cekiController.text.isEmpty
             ? 0.0
             : double.tryParse(cekiController.text) ?? 0.0,
+        selectedProducts: productList,
       );
 
       if (success) {
-        log("Successfully posted: ${product.name}");
+        log("Successfully posted: ${selectedProduct!.adi}");
       } else {
-        log("Failed to post: ${product.malAdi}");
+        log("Failed to post: ${selectedProduct!.adi}");
       }
-
-      break;
+    } catch (e) {
+      log("Error posting selected product: $e");
     }
-  } catch (e) {
-    log("Error posting selected product: $e");
   }
-}
-
 
   void _emitUpdatedState() {
     log("Emitting updated state with selected products:");
     selectedProducts.forEach((key, value) {
-      log("- ${key.malAdi}: $value");
+      log("- ${key.name}: $value");
     });
     emit(ProductDetailSuccess(
       productDetails: (state as ProductDetailSuccess).productDetails,

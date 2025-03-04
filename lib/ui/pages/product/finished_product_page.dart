@@ -22,7 +22,8 @@ class FinishedProductsPage extends StatelessWidget {
           return Center(child: Text('İnternet xətası: ${state.message}'));
         }
         if (state is ProductSuccess) {
-          final filteredProducts = state.products.where((p) => p.category == "Hazır fabrikat").toList();
+          final filteredProducts =
+              state.products.where((p) => p.nov == 1).toList();
           return ProductGrid(products: filteredProducts);
         }
         return const Center(child: Text('Məhsul yoxdur'));

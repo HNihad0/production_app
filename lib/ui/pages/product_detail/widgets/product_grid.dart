@@ -47,7 +47,7 @@ class ProductGridView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          product.malAdi,
+                          product.name,
                           style: const TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,

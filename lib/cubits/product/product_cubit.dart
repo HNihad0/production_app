@@ -9,8 +9,6 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   final ProductService productService;
 
-
-
   ProductCubit({required this.productService}) : super(ProductInitial());
 
   Future<void> fetchProducts() async {
@@ -29,6 +27,4 @@ class ProductCubit extends Cubit<ProductState> {
       emit(ProductNetworkError(message: e.toString()));
     }
   }
-
-
 }

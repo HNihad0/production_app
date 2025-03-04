@@ -30,6 +30,7 @@ class ProductDetailService {
     required int ware,
     required double count,
     required double weight,
+    required List<Map<String, dynamic>> selectedProducts,
   }) async {
     try {
       final Map<String, dynamic> requestBody = {
@@ -37,6 +38,7 @@ class ProductDetailService {
         "ware": ware,
         "count": count,
         "weight": weight,
+        "selectedProducts": selectedProducts
       };
 
       log("Request Body: ${json.encode(requestBody)}");
